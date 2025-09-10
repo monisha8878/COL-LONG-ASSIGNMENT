@@ -44,13 +44,16 @@ class heapManager_time{
     void recentFiles(int num){
         int i = 0 ;
         vector <File*> allfiles_copy=allfiles;
+        cout<<"RECENT FILES : "<<endl;
+
         if(!allfiles_copy.empty()){
         while(num>0 &&!allfiles_copy.empty()){
             File* recentfile=allfiles_copy[0];
-            cout<<"RECENT FILES : "<<endl;
             cout<<"---------------------"<<endl;
+            time_t snap_time = recentfile->edited_time;
+
             cout<<recentfile->getname()<<endl;
-            cout<<recentfile->edited_time<<endl;
+            cout<<"Edited Time: " <<ctime(&snap_time)<<endl;
            swap(allfiles_copy[0], allfiles_copy.back());  
             allfiles_copy.pop_back();  // removes the last element (which was the max)
             heapify_time_down(allfiles_copy,0);
@@ -142,10 +145,10 @@ class heapManager_versions{
             int i = 0 ;
             vector <File*> allfiles_copy=allfiles;
             if(!allfiles_copy.empty()){
+            cout<<"Files arranged in  decreasing order of number of versions : "<<endl;
             
             while(num>0){
             File* recentfile=allfiles_copy[0];
-                cout<<"Files arranged in  decreasing order of number of versions : "<<endl;
                 cout<<"---------------------"<<endl;
                 cout<<recentfile->getname()<<endl;
                 //cout<<recentfile->version_map.get_size()<<endl;

@@ -27,6 +27,11 @@ int main() {
                 
             createFile(filename,content );
         }
+        else if (command=="READ"){
+            string filename;
+            ss>>filename;
+            read(filename);
+        }
         else if (command == "INSERT") {
                 string filename;
                 ss >> filename;
@@ -44,9 +49,13 @@ int main() {
                 update(filename, content);
         }
         else if (command == "SNAPSHOT") {
-            string filename, snapname;
-            ss >> filename >> snapname;
-            snapshot(filename, snapname);
+            string filename;
+            ss >> filename;
+            string message;
+                getline(ss, message);          
+                if (!message.empty() && message[0] == ' ') message.erase(0, 1); 
+               
+                snapshot(filename, message);
         }
         else if (command == "ROLLBACK") {
             string filename;
@@ -59,17 +68,18 @@ int main() {
             ss >> filename;
             history(filename);
         }
-        else if (command == "RECENT") {
+        else if (command == "RECENT_FILES") {
             int n;
             ss >> n;
             allfiles_time.recentFiles(n);
         }
-        else if (command == "BIGGEST") {
+        else if (command == "BIGGEST_TREES") {
             int n;
             ss >> n;
             allfiles_version.biggestTrees(n); 
         }
         else if (command=="END"){
+            //ENDS THE PROGRAM 
             break;
         }
         else {
@@ -79,6 +89,7 @@ int main() {
     }
 
     // Reset all global structures automatically
+
     file_map.clear();    
     allfiles_time = heapManager_time();
     allfiles_version = heapManager_versions();

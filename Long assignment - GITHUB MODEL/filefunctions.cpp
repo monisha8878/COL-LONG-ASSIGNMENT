@@ -22,7 +22,7 @@ using namespace std;
            
             active_file->active_version->message=message;
             allfiles_version.updateFile_version(active_file);
-
+            cout<<"Snapshot Made."<<endl;
             return;
         }
 
@@ -130,14 +130,17 @@ using namespace std;
             cout<<"Files in Chronological Order of Timestamp: "<<endl;
             for (int i = 0 ; i <=versions; i++){
                 vector <TreeNode*> snapshotmap=active_file->version_map.mapvector;
+
                 sort(snapshotmap.begin(), snapshotmap.end(), [](TreeNode* a, TreeNode* b) { return a->get_snapshot_time()> b->get_snapshot_time(); });
 
                 if (snapshotmap[i]!= nullptr &&snapshotmap[i]->status() == true) {
+
                 cout<<"-------------------------------"<<endl;
-                cout<<snapshotmap[i]->get_version_id()<<endl;
-                cout<<snapshotmap[i]->get_content()<<endl;
-                cout<<snapshotmap[i]->message<<endl;
-                cout<<snapshotmap[i]->get_snapshot_time()<<endl;
+                cout<< "Version: "<<snapshotmap[i]->get_version_id()<<endl;
+                cout<<"Content: " <<snapshotmap[i]->get_content()<<endl;
+                cout<<"Snapshot Message: "<<snapshotmap[i]->message<<endl;
+                time_t snap_time = snapshotmap[i]->get_snapshot_time();
+                cout<<"Time when Snapshotted: "<<ctime(&snap_time)<<endl;
                 cout<<"-------------------------------"<<endl;
 
                 
